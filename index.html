@@ -2,131 +2,156 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- مهم للموبايل -->
   <title>لوحة التحكم - مشتلة السلام</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
-      font-family: 'Tajawal', Arial, sans-serif;
-      margin: 0;
-      background: #f7f7f7;
-      color: #333;
+      font-family:'Tajawal', Arial, sans-serif;
+      background:#f5f6f4;
+      padding:15px;
+      margin:0;
     }
-    header {
-      background: #2e7d32;
-      color: #fff;
-      text-align: center;
-      padding: 15px;
+    .form-container {
+      background:#fff;
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,.1);
+      max-width:800px;
+      margin:auto;
     }
-    .login, .dashboard {
-      max-width: 600px;
-      margin: 30px auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 3px 8px rgba(0,0,0,.1);
+    .form-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:15px;
     }
-    input, button, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
+    h3 {margin:0; font-size:1.4rem;}
+    .form-row {
+      display:flex;
+      gap:15px;
+      margin-bottom:10px;
     }
-    button {
-      background: #2e7d32;
-      color: #fff;
-      cursor: pointer;
-      border: none;
+    .form-group {
+      flex:1;
+      display:flex;
+      flex-direction:column;
     }
-    button:hover { background: #1b5e20; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+    label {margin-bottom:6px; font-weight:bold; font-size:.95rem;}
+    input, select, textarea {
+      padding:10px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:.95rem;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
+    textarea {resize:vertical;}
+    .form-actions {
+      text-align:center;
+      margin-top:15px;
     }
-    th { background: #f0f0f0; }
-    @media (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-        width: 100%;
-      }
-      tr { margin-bottom: 10px; }
-      td { text-align: right; padding-right: 50%; position: relative; }
-      td::before {
-        content: attr(data-label);
-        position: absolute;
-        right: 10px;
-        font-weight: bold;
-      }
+    .btn-save {
+      background:#2e7d32;
+      color:#fff;
+      padding:10px 20px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:1rem;
+    }
+    .btn-save i {margin-left:6px;}
+
+    /* ✅ تحسين التصفح على الهاتف */
+    @media (max-width:600px) {
+      body {padding:10px;}
+      .form-container {padding:15px;}
+      h3 {font-size:1.2rem;}
+      .form-row {flex-direction:column; gap:10px;}
+      .btn-save {width:100%;}
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>لوحة التحكم - مشتلة السلام</h1>
-  </header>
+  <div class="form-container">
+    <div class="form-header">
+      <h3>إضافة منتج جديد</h3>
+      <i class="fas fa-plus-circle fa-2x" style="color:#2e7d32;"></i>
+    </div>
 
+    <form id="productForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productName">اسم المنتج</label>
+          <input type="text" id="productName" required>
+        </div>
+        <div class="form-group">
+          <label for="productCategory">التصنيف</label>
+          <select id="productCategory" required>
+            <option value="">اختر</option>
+            <option value="fruit-trees">الأشجار المثمرة</option>
+            <option value="flowers">الورود والزهور</option>
+            <option value="ornamental">أشجار التزيين</option>
+            <option value="vegetables">بذور وخضروات</option>
+            <option value="tools">أدوات وأسمدة</option>
+          </select>
+        </div>
+      </div>
 
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productPrice">السعر (دج)</label>
+          <input type="number" id="productPrice" min="0" required>
+        </div>
+        <div class="form-group">
+          <label for="productImage">رابط الصورة</label>
+          <input type="url" id="productImage">
+        </div>
+      </div>
 
-  <!-- لوحة التحكم -->
-  <div class="dashboard" id="dashboard" style="display:none;">
-    <h2>إضافة منتج جديد</h2>
-    <input type="text" id="name" placeholder="اسم المنتج">
-    <input type="number" id="price" placeholder="السعر">
-    <input type="text" id="image" placeholder="رابط الصورة">
-    <textarea id="desc" placeholder="الوصف"></textarea>
-    <button onclick="addProduct()">إضافة</button>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="productQuantity">الكمية</label>
+          <input type="number" id="productQuantity" min="1" required>
+        </div>
+      </div>
 
-    <h2>قائمة المنتجات</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>الاسم</th>
-          <th>السعر</th>
-          <th>الصورة</th>
-          <th>الوصف</th>
-        </tr>
-      </thead>
-      <tbody id="productsTable"></tbody>
-    </table>
+      <div class="form-group">
+        <label for="productDescription">الوصف</label>
+        <textarea id="productDescription" rows="3"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-save"><i class="fas fa-save"></i> حفظ المنتج</button>
+      </div>
+    </form>
   </div>
 
-<script>
+  <script>
   const scriptUrl = "https://script.google.com/macros/s/AKfycbyI961zpO8JB-bAPj8X0-EF-yhiLMqm1BwrhfvcyLlJueH3e3d8_nA60-zagdtY0ChBpg/exec";
 
-  document.getElementById("productForm").addEventListener("submit", function(e){
-    e.preventDefault();
+    document.getElementById("productForm").addEventListener("submit", function(e){
+      e.preventDefault();
 
-    const data = {
-      name: document.getElementById("productName").value,
-      category: document.getElementById("productCategory").value,
-      price: document.getElementById("productPrice").value,
-      image: document.getElementById("productImage").value,
-      description: document.getElementById("productDescription").value,
-      quantity: document.getElementById("productQuantity").value
-    };
+      const data = {
+        name: document.getElementById("productName").value,
+        category: document.getElementById("productCategory").value,
+        price: document.getElementById("productPrice").value,
+        image: document.getElementById("productImage").value,
+        description: document.getElementById("productDescription").value,
+        quantity: document.getElementById("productQuantity").value
+      };
 
-    fetch(scriptUrl, {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(res => res.text())
-    .then(msg => {
-      alert(msg);
-      document.getElementById("productForm").reset();
-    })
-    .catch(err => alert("خطأ: " + err));
-  });
-</script>
-
-
+      fetch(scriptUrl, {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert(msg);
+        document.getElementById("productForm").reset();
+      })
+      .catch(err => alert("خطأ: " + err));
+    });
+  </script>
 </body>
 </html>
-
