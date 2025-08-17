@@ -128,32 +128,32 @@
 
   <script>
   const scriptUrl = "https://script.google.com/macros/s/AKfycbwB5rluNnvmJBuA59KiZ6mQS45TVRRCEc5PplFIy-lSXZ1Kj2thcqFs77kuaaM710QuWg/exec";
+  document.getElementById("productForm").addEventListener("submit", function(e){
+    e.preventDefault();
 
-    document.getElementById("productForm").addEventListener("submit", function(e){
-      e.preventDefault();
+    const data = {
+      name: document.getElementById("productName").value,
+      category: document.getElementById("productCategory").value,
+      price: document.getElementById("productPrice").value,
+      image: document.getElementById("productImage").value,
+      description: document.getElementById("productDescription").value,
+      quantity: document.getElementById("productQuantity").value
+    };
 
-      const data = {
-        name: document.getElementById("productName").value,
-        category: document.getElementById("productCategory").value,
-        price: document.getElementById("productPrice").value,
-        image: document.getElementById("productImage").value,
-        description: document.getElementById("productDescription").value,
-        quantity: document.getElementById("productQuantity").value
-      };
-
-      fetch(scriptUrl, {
-        method: "POST",
-        body: JSON.stringify(data)
-      })
-      .then(res => res.text())
-      .then(msg => {
-        alert(msg);
-        document.getElementById("productForm").reset();
-      })
-      .catch(err => alert("خطأ: " + err));
-    });
+    fetch(scriptUrl, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.text())
+    .then(msg => {
+      alert(msg);
+      document.getElementById("productForm").reset();
+    })
+    .catch(err => alert("خطأ: " + err));
+  });
   </script>
 </body>
 </html>
+
 
 
